@@ -7,22 +7,23 @@ import 'package:flutter/material.dart';
 /// The [onRatingChanged], [filledIcon] & [emptyIcon] must not be null.
 class RatingBar extends StatefulWidget {
   /// Default constructor for [RatingBar].
-  const RatingBar({
-    super.key,
-    required this.filledIcon,
-    required this.emptyIcon,
-    required this.onRatingChanged,
-    this.initialRating = 0.0,
-    this.maxRating = 5,
-    this.halfFilledIcon,
-    this.isHalfAllowed = false,
-    this.alignment = Alignment.centerLeft,
-    this.direction = Axis.horizontal,
-    this.filledColor = Colors.amber,
-    this.emptyColor = Colors.grey,
-    this.halfFilledColor = Colors.amber,
-    this.size = 32,
-  })  : _readOnly = false,
+  const RatingBar(
+      {super.key,
+      required this.filledIcon,
+      required this.emptyIcon,
+      required this.onRatingChanged,
+      this.initialRating = 0.0,
+      this.maxRating = 5,
+      this.halfFilledIcon,
+      this.isHalfAllowed = false,
+      this.alignment = Alignment.centerLeft,
+      this.direction = Axis.horizontal,
+      this.filledColor = Colors.amber,
+      this.emptyColor = Colors.grey,
+      this.halfFilledColor = Colors.amber,
+      this.size = 32,
+      this.space = 0.0})
+      : _readOnly = false,
         assert(
           !isHalfAllowed || halfFilledIcon != null,
           'Please provide halfFilledIcon if isHalfAllowed is true.',
@@ -41,6 +42,7 @@ class RatingBar extends StatefulWidget {
     this.alignment = Alignment.centerLeft,
     this.direction = Axis.horizontal,
     this.initialRating = 0.0,
+    this.space = 0.0,
     this.filledColor = Colors.amber,
     this.emptyColor = Colors.grey,
     this.halfFilledColor = Colors.amber,
@@ -91,6 +93,9 @@ class RatingBar extends StatefulWidget {
 
   /// Size of the rating bar.
   final double size;
+
+  /// space size in between rating icons
+  final double space;
 
   /// If true, the rating bar is read only.
   final bool _readOnly;
@@ -183,6 +188,11 @@ class _RatingBarState extends State<RatingBar> {
       iconData = widget.filledIcon;
       color = widget.filledColor;
     }
-    return Icon(iconData, color: color, size: widget.size);
+    return Padding(
+      padding: EdgeInsets.only(
+          top: widget.direction == Axis.vertical ? widget.space : 0,
+          right: widget.direction == Axis.horizontal ? widget.space : 0),
+      child: Icon(iconData, color: color, size: widget.size),
+    );
   }
 }
