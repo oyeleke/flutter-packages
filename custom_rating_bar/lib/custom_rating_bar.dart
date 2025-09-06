@@ -190,8 +190,13 @@ class _RatingBarState extends State<RatingBar> {
     }
     return Padding(
       padding: EdgeInsets.only(
-          top: widget.direction == Axis.vertical ? widget.space : 0,
-          right: widget.direction == Axis.horizontal ? widget.space : 0),
+          top: widget.direction == Axis.vertical && position != widget.maxRating
+              ? widget.space
+              : 0,
+          right: widget.direction == Axis.horizontal &&
+                  position != widget.maxRating
+              ? widget.space
+              : 0),
       child: Icon(iconData, color: color, size: widget.size),
     );
   }
